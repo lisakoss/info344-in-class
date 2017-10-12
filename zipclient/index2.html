@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>INFO 344</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- jquery -->
+</head>
+<body>
+    input to get user's name
+    <div id="demo">
+        <form method="GET" id="nameform" action="">
+            <input name="name" type="text" id="nameinput"/>
+        </form>
+        <button id="submit" type="submit" form="nameform" value="submit">Submit</button>
+        send to localhost:4000/hello?name=.
+    </div>
+
+    <div id="memoryText">
+        every second, request localhost:4000/memory and display Alloc field
+    </div>
+
+    <script>
+        $("#submit").click(loadDoc); // add onClick when DOM loads
+
+        function loadDoc() {
+            var form = document.querySelector('form');
+            //var name = document.querySelector('#nameinput').value;
+            
+            /* var name = $("#nameinput").val();
+            name = escape(name); */ // makes spaces and &'s etc. suitable for url transfer
+            
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+            })
+
+            function nameHandler(text) {
+                $("#demo").html(text);
+            }
+
+            $.ajax({url:"http://localhost:4000/hello", data: $("#nameform").serialize(), success: nameHandler});
+
+            /* javascript way for ajax 
+
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                document.getElementById('demo').innerHTML = this.responseText;
+                console.log(this.responseText);
+            }
+            request.open("GET", "http://localhost:4000/hello?name=" + name, true);
+            request.send();
+
+            */
+        };
+
+        function memoryHandler(text) {
+            console.log(text.Alloc);
+            $("#memoryText").html(text.Alloc);
+        }
+
+        setInterval(function(){$.ajax({url: "http://localhost:4000/memory", success: memoryHandler})}, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>INFO 344</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- jquery -->
+</head>
+
+<body>
+    <div id="cityForm">
+        <form method="GET" id="city-form" action="localhost:4000/hello">
+            City Name: <input type="text" id="cityname"></input>
+            Zip: <select id="zipselect"></select>
+            State: <select id="stateselect"></select>
+        </form>
+        <button type="submit" form="city-name" id="submit" value="submit">Send</button>
+    </div>
+
+    <div id="results">
+        <ul id="ziplist"></ul>
+    </div>
+
+    <script src="js/javascript.js"></script>
+</body>
+</html>
